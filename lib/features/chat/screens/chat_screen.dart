@@ -33,6 +33,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   String _draftAssistant = '';
   StreamSubscription<String>? _streamSub;
 
+  /// Holds the final AI answer after streaming completes but BEFORE the
+  /// Drift DB stream has emitted the newly-inserted row.
+  /// This bridges the visual gap on web (IndexedDB async write latency).
+  String? _pendingAnswer;
+
   @override
   void initState() {
     super.initState();
@@ -152,6 +157,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         setState(() {
           _isStreaming = false;
           _draftAssistant = '';
+          // Keep answer visible until the DB stream confirms the row.
+          _pendingAnswer = answer;
         });
         _scrollToBottom();
       },
@@ -231,9 +238,28 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           content: _draftAssistant.isEmpty ? '...' : _draftAssistant,
           timestamp: DateTime.now().millisecondsSinceEpoch,
         ),
+      // Bridge bubble: shown while Drift stream catches up after DB write.
+      // Cleared by ref.listen below once the message appears in `messages`.
+      if (!_isStreaming && _pendingAnswer != null &&
+          !messages.any((m) => m.role == 'assistant' && m.content == _pendingAnswer))
+        ChatMessageEntity(
+          id: -2,
+          sessionId: widget.sessionId,
+          role: 'assistant',
+          content: _pendingAnswer!,
+          timestamp: DateTime.now().millisecondsSinceEpoch,
+        ),
     ];
 
-    ref.listen(chatMessagesProvider(widget.sessionId), (_, _) => _scrollToBottom());
+    // Clear _pendingAnswer as soon as its row appears in the DB stream.
+    ref.listen(chatMessagesProvider(widget.sessionId), (_, next) {
+      final msgs = next.valueOrNull ?? const <ChatMessageEntity>[];
+      if (_pendingAnswer != null &&
+          msgs.any((m) => m.role == 'assistant' && m.content == _pendingAnswer)) {
+        if (mounted) setState(() => _pendingAnswer = null);
+      }
+      _scrollToBottom();
+    });
 
     return Scaffold(
       appBar: AppBar(
