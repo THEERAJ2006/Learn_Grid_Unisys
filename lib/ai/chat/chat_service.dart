@@ -65,7 +65,9 @@ class ChatService {
     final contextChunks = await _gatherContext(question, linkedFileIds);
     final prompt = _buildPrompt(question, history, contextChunks);
     final useCloud = await _shouldUseCloud();
-    final response = useCloud
+    // Capture mounted check BEFORE first await; re-check after each await.
+    final isMounted = context.mounted;
+    final response = useCloud && isMounted
         ? await _generateCloudReply(context, prompt)
         : _generateOfflineReply(question, history, contextChunks);
 

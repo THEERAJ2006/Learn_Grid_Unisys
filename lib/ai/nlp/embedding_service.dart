@@ -75,29 +75,52 @@ class EmbeddingService {
   Future<List<double>> embed(String text) async {
     await initialize();
 
-    // NOTE: Proper MiniLM requires attention mask + token type ids.
-    // For MVP, we run a naive tokenization path and return a deterministic
-    // fallback vector if the runtime fails.
+    // NOTE: MiniLM (all-MiniLM-L6-v2) exports:
+    //   inputs : input_ids [1,seq], attention_mask [1,seq], token_type_ids [1,seq]
+    //   output : last_hidden_state [1,seq,384]  ← NOT 'embedding'
+    // We mean-pool over the sequence dimension to get a 384-dim sentence vector.
     if (!kIsWeb) {
       try {
         final tokens = _tokenizer.encode(text, maxLength: 128);
+        final seqLen = tokens.length;
         final inputIds = Int64List.fromList(tokens);
-        // Some exports expect 2-D tensors. The onnxruntime_flutter wrapper
-        // currently accepts flat typed lists; the adapter will map it.
+        // attention_mask: 1 for real tokens, 0 for padding (token id == 0)
+        final attentionMask = Int64List.fromList(
+          tokens.map((id) => id != 0 ? 1 : 0).toList(growable: false),
+        );
+        // token_type_ids: all zeros (single-sentence task)
+        final tokenTypeIds = Int64List(seqLen);
+
         final outputs = await _onnx.run(
           inputs: {
             'input_ids': inputIds,
+            'attention_mask': attentionMask,
+            'token_type_ids': tokenTypeIds,
           },
-          // Model export output name varies. We'll try a common name and fall
-          // back to deterministic vectors if it fails.
-          outputNames: const ['embedding'],
+          // Real output name confirmed from ONNX protobuf scan.
+          // 'sentence_embedding' / 'embedding' are common alternatives kept as fallback.
+          outputNames: const ['last_hidden_state', 'sentence_embedding', 'embedding'],
         );
-        final out = outputs['embedding'];
-        if (out is Float32List) {
-          return _normalize(out).toList(growable: false);
+
+        // Prefer the correct output; log a warning if all are missing.
+        final rawOut = outputs['last_hidden_state']
+            ?? outputs['sentence_embedding']
+            ?? outputs['embedding'];
+
+        if (rawOut == null) {
+          debugPrint(
+            '[EmbeddingService] ONNX returned no known output. '
+            'Available keys: ${outputs.keys.toList()}. '
+            'Falling back to deterministic vector.',
+          );
+        } else if (rawOut is Float32List) {
+          // last_hidden_state is shape [1, seqLen, 384] — flattened to [seqLen*384].
+          // Mean-pool across the sequence dimension to get [384].
+          final vec = _meanPool(rawOut, seqLen: seqLen, hiddenSize: _embeddingDim);
+          return _normalize(vec).toList(growable: false);
         }
-      } catch (_) {
-        // fall through
+      } catch (e) {
+        debugPrint('[EmbeddingService] ONNX inference failed: $e — using fallback.');
       }
     }
     return _deterministicFallback(text);
@@ -297,6 +320,31 @@ class EmbeddingService {
       v[i] = (v[i] / norm).toDouble();
     }
     return v;
+  }
+
+  /// Mean-pools a flat Float32List that represents [1, seqLen, hiddenSize].
+  ///
+  /// The ONNX runtime returns last_hidden_state as a flattened list of length
+  /// [seqLen * hiddenSize]. We average across the seqLen dimension to get a
+  /// single [hiddenSize]-dim sentence vector — standard for sentence-transformers.
+  Float32List _meanPool(Float32List flat, {required int seqLen, required int hiddenSize}) {
+    // Guard: if the tensor is already [hiddenSize] (some exports do CLS-pool), return as-is.
+    if (flat.length == hiddenSize) return flat;
+
+    final out = Float32List(hiddenSize);
+    final effectiveSeq = flat.length ~/ hiddenSize;
+    if (effectiveSeq == 0) return out;
+
+    for (var t = 0; t < effectiveSeq; t++) {
+      final base = t * hiddenSize;
+      for (var h = 0; h < hiddenSize; h++) {
+        out[h] += flat[base + h];
+      }
+    }
+    for (var h = 0; h < hiddenSize; h++) {
+      out[h] /= effectiveSeq;
+    }
+    return out;
   }
 
   double _cosineSimilarity(List<double> a, List<double> b) {

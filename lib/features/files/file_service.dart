@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data'; // Added for Uint8List
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart'; // for kIsWeb
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
@@ -112,7 +113,8 @@ class FileService {
 
   Future<void> deleteFile(int fileId) async {
     final file = await fileRepository.getFileById(fileId);
-    if (file != null) {
+    if (file != null && !kIsWeb) {
+      // dart:io is not available on web — skip physical file deletion.
       final physical = File(file.localPath);
       if (physical.existsSync()) {
         await physical.delete();

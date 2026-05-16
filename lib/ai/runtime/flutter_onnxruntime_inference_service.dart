@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart'; // for kDebugMode, debugPrint
 import 'package:flutter/services.dart';
 import 'package:flutter_onnxruntime/flutter_onnxruntime.dart' as ort;
 
@@ -69,6 +70,10 @@ class FlutterOnnxruntimeInferenceService implements OnnxInferenceService {
       }
 
       final outputs = await session.run(createdInputs);
+      // Diagnostic: log real output keys on first inference (debug builds only).
+      if (kDebugMode) {
+        debugPrint('[OnnxRuntime] Output keys from model: ${outputs.keys.toList()}');
+      }
       final out = <String, Object?>{};
       for (final name in outputNames) {
         final ov = outputs[name];

@@ -150,17 +150,29 @@ class _FileManagerScreenState extends ConsumerState<FileManagerScreen> {
       withData: kIsWeb,
     );
     if (picked == null || picked.files.isEmpty) return;
-    
+
     final platformFile = picked.files.single;
-    
-    if (kIsWeb) {
-      final bytes = platformFile.bytes;
-      if (bytes == null) return;
-      await ref.read(fileServiceProvider).processAndStoreBytes(platformFile.name, bytes);
-    } else {
-      final path = platformFile.path;
-      if (path == null) return;
-      await ref.read(fileServiceProvider).processAndStore(File(path));
+
+    try {
+      if (kIsWeb) {
+        final bytes = platformFile.bytes;
+        if (bytes == null) return;
+        await ref.read(fileServiceProvider).processAndStoreBytes(platformFile.name, bytes);
+      } else {
+        final path = platformFile.path;
+        if (path == null) return;
+        await ref.read(fileServiceProvider).processAndStore(File(path));
+      }
+      // Guard context use after async gap.
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${platformFile.name} uploaded successfully')),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Upload failed: $e'), backgroundColor: Colors.redAccent),
+      );
     }
   }
 

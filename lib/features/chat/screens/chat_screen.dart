@@ -101,6 +101,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     _scrollToBottom();
 
     _streamSub?.cancel();
+    if (!mounted) return; // guard before passing context across async gap
     final stream = ref.read(chatServiceProvider).streamReply(
           context: context,
           sessionId: session.id,

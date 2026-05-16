@@ -53,7 +53,9 @@ class SettingsPrefs {
     final raw = sp.getString(_aiModeKey);
     return AiModePreference.values.firstWhere(
       (e) => e.name == raw,
-      orElse: () => AiModePreference.offlineOnly,
+      // Default to alwaysCloud so the API keys in .env are used out of the box.
+      // Users can switch to offlineOnly in Settings at any time.
+      orElse: () => AiModePreference.alwaysCloud,
     );
   }
 

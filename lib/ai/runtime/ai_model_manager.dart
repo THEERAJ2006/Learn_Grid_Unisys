@@ -47,7 +47,8 @@ class AIModelManager {
       throw StateError('EmbeddingService not initialized. Call initialize() first.');
     }
     await _loadEmbeddingModel();
-    _resetUnloadTimer(_embeddingUnloadTimer, _unloadEmbeddingModel);
+    _embeddingUnloadTimer?.cancel();
+    _embeddingUnloadTimer = Timer(_modelUnloadDelay, () => _unloadEmbeddingModel());
     return _embeddingService!;
   }
 
@@ -55,7 +56,8 @@ class AIModelManager {
   Future<WhisperService> get whisperService async {
     _whisperService ??= WhisperService();
     await _loadWhisperModel();
-    _resetUnloadTimer(_whisperUnloadTimer, _unloadWhisperModel);
+    _whisperUnloadTimer?.cancel();
+    _whisperUnloadTimer = Timer(_modelUnloadDelay, () => _unloadWhisperModel());
     return _whisperService!;
   }
 
@@ -63,7 +65,8 @@ class AIModelManager {
   Future<ImageService> get imageService async {
     _imageService ??= ImageService();
     await _loadImageModel();
-    _resetUnloadTimer(_imageUnloadTimer, _unloadImageModel);
+    _imageUnloadTimer?.cancel();
+    _imageUnloadTimer = Timer(_modelUnloadDelay, () => _unloadImageModel());
     return _imageService!;
   }
 
@@ -115,11 +118,7 @@ class AIModelManager {
     debugPrint('[AIModelManager] ImageService unloaded');
   }
 
-  // Timer management
-  void _resetUnloadTimer(Timer? timer, Future<void> Function() callback) {
-    timer?.cancel();
-    timer = Timer(_modelUnloadDelay, () => callback());
-  }
+
 
   /// Manually unload all models to free memory.
   Future<void> unloadAll() async {
