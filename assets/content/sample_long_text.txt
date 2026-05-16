@@ -1,0 +1,67 @@
+LearnGrid Sample Long Text
+
+This file exists to provide real, scrollable content for local testing and widget tests.
+It is intentionally plain text and safe to commit.
+
+---
+
+Paragraph 1:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 2:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 3:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 4:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 5:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 6:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 7:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 8:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 9:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 10:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 11:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 12:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 13:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 14:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 15:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 16:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 17:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 18:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 19:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+
+Paragraph 20:
+Learning works best when content is accessible offline. This sample repeats intentionally to create scroll length.
+

@@ -1,0 +1,1261 @@
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+1 Dept of ADS St. Joseph’s College of Engineering 
+ 
+ 
+ 
+UNIT-I 
+DIGITAL IMAGE FUNDAMENTALS 
+Introduction – Origin – Steps in Digital Image Processing – Components – Elements of 
+Visual Perception – Image Sensing and Acquisition – Image Sampling and Quantization – 
+Relationships between pixels-Some Basic Morphological Algorithms- Color Models  
+DIGITAL IMAGE FUNDAMENTALS: 
+The field of digital image processing refers to processing digital images by means of digital 
+computer. Digital image is composed of a finite number of elements, each of which has a particular location 
+and value. These elements are called picture elements, image elements, pels and pixels. Pixel is the term 
+used most widely to denote the elements of digital image. 
+An image is a two-dimensional function that represents a measure of some characteristic such as 
+brightness or color of a viewed scene. An image is a projection of a 3-D scene into a 2D projection plane. 
+An image may be defined as a two-dimensional function f(x,y), where x and y are spatial (plane) 
+coordinates, and the amplitude of f at any pair of coordinates (x,y) is called the intensity of the image at 
+that point. 
+ 
+ 
+ 
+The term gray level is used often to refer to the intensity of monochrome images. Color images are 
+formed by a combination of individual 2-D images. 
+ 
+For example: The RGB color system, a color image consists of three (red, green and blue) individual 
+component images. For this reason many of the techniques developed for Monochrome images can be 
+extended to color images by processing the three component images individually. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+2 Dept of ADS St. Joseph’s College of Engineering 
+ 
+ 
+ 
+An image may be continuous with respect to the x - and y- coordinates and also in amplitude. 
+Converting such an image to digital form requires that the coordinates, as well as the amplitude, be 
+digitized. 
+APPLICATIONS OF DIGITAL IMAGE PROCESSING 
+Since digital image processing has very wide applications and almost all of the technical fields are 
+impacted by DIP, we will just discuss some of the major applications of DIP. 
+Digital image processing has a broad spectrum of applications, such as 
+ Remote sensing via satellites and other spacecrafts 
+ Image transmission and storage for business applications 
+ Medical processing, 
+ RADAR (Radio Detection and Ranging) 
+ SONAR(Sound Navigation and Ranging) 
+ Acoustic image processing (The study of underwater sound is known as underwater 
+acoustics or hydro acoustics.) 
+ Robotics and automated inspection of industrial parts. 
+ Images acquired by satellites are useful in tracking of 
+ Earth resources; 
+ Geographical mapping; 
+ Prediction of agricultural crops, 
+ Urban growth and weather monitoring 
+ Flood and fire control and many other environmental applications. 
+Space image applications include: 
+ Recognition and analysis of objects contained in images obtained from deep 
+space-probe missions. 
+ Image transmission and storage applications occur in broad cast television 
+ Teleconferencing 
+ Transmission of facsimile images(Printed documents and graphics) for office 
+automation Communication over computer networks 
+ Closed-circuit television based security monitoring systems and 
+In military communications. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 3 Dept of ADS 
+ 
+ 
+Medical applications: 
+ Processing of chest X-rays 
+ Cine angiograms 
+ Projection images of transaxial tomography and 
+ Medical images that occur in radiology nuclear magnetic resonance (NMR) 
+ Ultrasonic scanning 
+IMAGE PROCESSING TOOLBOX (IPT) is a collection of functions that extend 
+the capability of the MATLAB numeric computing environment. These functions, and the 
+expressiveness of the MATLAB language, make many image -processing operations easy 
+to write in a compact, clear manner, thus providing a ideal software prototyping 
+environment for the solution of image processing problem. 
+ 
+Digital Image Processing and its representation 
+An image may be defined as a two -dimensional function, f(x, y), where x and  y are 
+spatial  (plane) coordinates, and the amplitude of f at any pair of coordinates (x,  y) is called 
+the intensity or gray level of the image at that point. When x, y, and the amplitude values of 
+f are all finite, discrete quantities, we call the image a digital image. The field of digital 
+image processing refers  to processing digital images  by means of a digital computer. Note  
+that a digital image is composed of a  finite number of elements, each of which has a 
+particular location and value. These elements are referred to as picture elements,  image 
+elements, pels, and pixels. Pixel is the term most widely  used to denote the elements of a  
+digital image. 
+Vision is  the most advanced of our senses, so it is not surprising that images play the 
+single most important role in human perception. However, unlike humans, who are limited 
+to the visual band of the electromagnetic (EM) spectrum, imaging machines cover almost 
+the entire EM spectrum, ranging from gamma to radio waves. They can operate on images 
+generated by sources that humans are not  accustomed to associating with images. These  
+include ultra-sound, electron microscopy, and computer-generated images. Thus, digital 
+image processing encompasses a wide and varied field of applications. There is no general 
+agreement among authors  regarding where  image processing stops and other related areas, 
+such as image analysis and computer vision, start. 
+ 
+Sometimes a distinction  is made by  defining image  processing as  a discipline in 
+which both the input and output of  a process are images. We believe this to be a limiting 
+and somewhat artificial boundary. For example, under this definition, even the  trivial  task 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 4 Dept of ADS 
+ 
+ 
+of computing the average intensity of an image (which yields a single number) would not be 
+considered an image processing  operation. On the other  hand, there  are fields such as 
+computer vision whose ultimate goal is to use computers to emulate human vision, 
+including learning and being able to make inferences and take actions based on visual inputs. 
+This area itself is a branch of artificial intelligence (AI) whose objective is to emulate 
+human intelligence. The field of AI is in its earliest stages of infanc y in terms of development, 
+with progress having been much slower than  originally anticipated. The area of image 
+analysis (also called image understanding) is in between image processing and computer vision. 
+ 
+There are no  clear-cut boundaries in the continuum from image processing at one end 
+to computer vision at the other. However, one useful paradigm is to consider three types of 
+computerized processes in this continuum: low -, mid -, and high -level processes. Low - level 
+processes involve primitive operations such as image preprocessing to reduce noise, 
+contrast enhancement,  and image sharpening. A low -level process  is characterized by the  
+fact that both its inputs and outputs are images. Mid -level processing  on images involves  
+tasks such as segmentation (partitioning an  image into regions  or objects), description of 
+those objects to reduce them to a form suitable for computer processing, and classification 
+(recognition) of individual objects. A mid -level process is characterized by the  fact that its 
+inputs generally are images, but its outputs are attributes extracted from those images (e.g., 
+edges, contours, and the identity of individual objects). Finally,  higher-level processing 
+involves ―making sense‖ of an ensemble of recognized objects, as in image analysis, and, 
+at the far end of the continuum, performing the cognitive functions normally associated with 
+vision  and,  in  addition, encompasses processes that extract attributes from images, up to 
+and including the recognition of individual objec ts. As a simple illustration to clarify these 
+concepts, consider the area of automated analysis of  text. The processes of acquiring an 
+image of the area containing the text, preprocessing that image, extracting (segmenting) the 
+individual characters, descr ibing the  characters in  a form suitable for computer processing,  
+and recognizing those individual characters are in the scope of what we call digital image 
+processing. 
+Representing Digital Images: 
+ 
+We will  use two principal ways to represent digital images. Assume that an image  
+f(x, y) is sampled so that the resulting digital  image has M rows and N columns. The  values 
+of the coordinates (x, y) now become discrete quantities. For  notational clarity and 
+convenience,  we shall use integer values for thes e discrete coordinates. Thus, the values  of 
+the coordinates at the origin  are (x, y) = (0,  0). The next coordinate values along the first 
+row of the image are represented as (x, y) = (0, 1). It is important to keep in mind that the 
+notation (0, 1) is used to signify the second sample along the first row. It does not mean that 
+these are the actual values of  physical coordinates when  the image was sampled. Figure 1 
+shows the coordinate convention used. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 5 Dept of ADS 
+ 
+ 
+ 
+ 
+ 
+ 
+Fig .1. Coordinate convention used to represent digital images 
+ 
+The notation introduced in the preceding paragraph allows us to write the complete M*N digital 
+image in the following compact matrix form: 
+ 
+ 
+ 
+ 
+ 
+The right side of this equation is by definition a digital image. Each element of this matrix array 
+is called an image element, picture element, pixel, or pel. 
+Fundamental Steps in Digital Image Processing 
+ 
+There are 11 fundamental steps in digital image processing (DIP) , all these steps may have sub-steps. 
+The fundamental steps in DIP are described below with a neat block diagram. 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 6 Dept of ADS 
+ 
+ 
+1. Image Acquisition 
+ 
+This is the first fundamental steps in digital image processing. Image acquisition could be  as 
+simple as being given an image that is already in digital form. Generally, the image acquisition stage 
+involves pre-processing, such as scaling etc. 
+ 
+ 
+Fig.2. Fundamental steps in Digital Image Processing 
+2. Image Enhancement 
+ 
+Image enhancement is among the simplest and most appealing areas of  digital image 
+processing. Basically, the idea  behind enhancement techniques is to bring out  detail that is obscured, 
+or simply to highlight certain features of interest in an image. Such as, changing brightness & co ntrast 
+etc. 
+3. Image Restoration 
+ 
+Image restoration is an area that also deals with improving the appearance of an  image. 
+However, unlike enhancement, which is subjective, image restoration is objective, in the sense that 
+restoration techniques tend to be based on mathematical or probabilistic models of image degradation. 
+4. Color Image Processing 
+ 
+Color image processing is an area that has been gaining its importance because  of the 
+significant increase in the use of digital images over the Internet. This may include color modeling 
+and processing in a digital domain etc. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 7 Dept of ADS 
+ 
+ 
+5. Wavelets and Multi-Resolution Processing 
+ 
+Wavelets are the foundation for representing images in various degrees of resolution. Images 
+subdivision successively into smaller regions for data compression and for pyramidal representation. 
+6. Compression 
+ 
+Compression deals with techniques for reducing the storage required to save an image or the 
+bandwidth to transmit it. Particularly in the uses  of internet it is very much  necessary to compress 
+data. 
+7. Morphological Processing 
+ 
+Morphological processing deals with tools for extracting image components that are useful  in 
+the representation and description of shape. 
+8. Segmentation 
+ 
+Segmentation procedures partition an image into its constituent parts or objects. In general, 
+autonomous segmentation is one of the most difficult tasks in digital image processing. A rugged 
+segmentation procedure brings the process a long way toward successful  solution of imaging 
+problems that require objects to be identified individually. 
+9. Representation and Description 
+Representation and description almost always follow the output of a segmentation stage, which 
+usually is raw pixel data, constituting either the bounda ry of a region or all the points in the region 
+itself. Choosing a representation is only part of the solution for transforming raw data into a f orm 
+suitable for subsequent computer processing. Description deals with extracting attributes that result in 
+some quantitative information of interest or are basic for differentiating one cl ass of objects from 
+another. 
+10. Object recognition 
+ 
+Recognition is the process that assigns a label, such as, “vehicle” to an object based on its 
+descriptors. 
+11. Knowledge Base 
+ 
+Knowledge may be as simple as detailing regions of an image where the information of interest 
+is known to be located, thus limiting the search that has to be conducted in seeking that information. 
+The knowledge base also can be quite complex, such  as an  interrelated list of all major possible  
+defects in a materials inspection problem or an image database containing high -resolution satellite 
+images of a region in connection with change-detection applications. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 8 Dept of ADS 
+ 
+ 
+Components of an Image Processing System: 
+ 
+As recently as the mid -1980s, numerous models of image processing systems being sold 
+throughout the world were rather substantial peripheral devices that attached to equally 
+substantial host computers. Late in the 1980s and early in the 1990s, the market shifted to image 
+processing hardware in the form of single boards designed to be compatible with industry 
+standard buses and to fit into engineering workstation cabinets and personal computers. In 
+addition to lowering costs, this market shift also served as a catalyst for a significant number of 
+new companies whose specialty is the development of software written specifically for image 
+processing. 
+ 
+Fig.3. Components of a general purpose Image Processing System 
+Although large -scale image processing systems still are being sold for massive imaging 
+applications, such as processing of satellite images, the trend continues toward miniaturizing and 
+blending of general-purpose small computers with specialized  image processing hardware. Figure 
+3 shows the basic components comprising a typical general -purpose system used for digital im age 
+processing. The function of each component is discussed in the following  paragraphs, starting with 
+image sensing. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 9 Dept of ADS 
+ 
+ 
+With reference to sensing, two elements are required to acquire digital images. The first is a 
+physical device that is sensitive to the energy radiated by the object we wish to image. The 
+second, called a digitizer, is a device for converting the output of the physical sensing device into 
+digital form. For instance, in a digital video camera, the sensors produce an electrical output 
+proportional to light intensity. The digitizer converts these outputs to digital data. 
+Specialized image processing hardware usually consists of the digitizer just mentioned, plus 
+hardware that performs other primitive operations, such as an arithmetic logic unit (ALU), which 
+performs arithmetic and logical operations in parallel on  entire images. One example of how an  
+ALU is used is in averaging images as quickly as they are digitized, for the  purpose of noise 
+reduction. This type of hardware sometimes is called a front -end subsystem,  and its most 
+distinguishing characteristic is speed. In other words, this unit performs functions that require 
+fast data throughputs (e.g.,  digitizing and averaging video images at 30  frames/second) that the  
+typical main computer cannot handle. 
+The comput er in an image processing  system is a general -purpose computer  and can range 
+from a PC to a supercomputer. In dedicated applications, sometimes specially designed computers  
+are used to  achieve a required  level of performance, but our interest here  is on general-purpose 
+image processing systems. In these systems, almost any well-equipped PC-type machine is 
+suitable for offline image processing tasks. 
+Software for image processing consists of specialized modules that perform specific tasks. 
+A well- designed package also includes the capability for the user to write code that, as a 
+minimum, utilizes the specialized modules. More sophisticated software packages  allow the 
+integration of those modules and general -purpose software commands from at least one comput er 
+language. 
+Mass storage capability is a must in image processing applications. An image  of size 
+1024*1024 pixels, in which  the intensity of each pixel is an 8-bit quantity, requires one megabyte 
+of storage space if the image is not compressed. When dealing with thousands, or even millions, of 
+images, providing adequate  storage in an image  processing system  can be a challenge. Digital 
+storage for image processing applications falls into three principal categories: (1) short-term 
+storage for use during  processing, (2) on -line storage for relatively  fast re -call, and  (3) archival 
+storage, characterized by infrequent access. Storage is measured in bytes (eight bits), Kbytes (one 
+thousand bytes), Mbytes (one million  bytes), Gbytes (meaning giga,  or one bil lion, bytes),  and 
+Tbytes (meaning tera, or one trillion, bytes). One method of providing short-term storage is 
+computer memory. Another is by specialized boards, called frame buffers, that store one or more 
+images and can be accessed rapidly, usually at video rates (e.g., at 30 complete  images per 
+second).The latter  method allows virtually  instantaneous image zoom, as well as  scroll (vertical  
+shifts) and pan (horizontal shifts). Frame buffers usually are housed in the  specialized image 
+processing hardware unit shown in Fig.3.Online storage generally takes the form of magnetic 
+disks or optical-media storage. The key factor characterizing on-line storage is frequent access to 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 10 Dept of ADS 
+ 
+ 
+the stored data. Finally, arc hival storage is characterized by massive storage requirements but 
+infrequent need for access. Magnetic  tapes and optical disks housed in ―jukeboxes‖ are the  usual 
+media for archival applications. 
+Image displays in use today are  mainly color (preferably flat screen) TV monitors. Monitors  
+are driven by the  outputs of image  and graphics display cards that  are an integral  part of the 
+computer system. Seldom are there requirements for image display applications that cannot be 
+met by display cards available co mmercially as part of the computer system. In some cases, it is 
+necessary to have  stereo displays, and these are implemented  in the form of  headgear containing 
+two small displays embedded in goggles worn by the user. 
+Hardcopy devices for recording images include laser printers, film cameras, heat -sensitive 
+devices, inkjet  units, and digital  units, such as optical and CD-ROM disks. Film provides the 
+highest possible resolution, but paper is the obvious medium of choice for written material. For 
+presentations, images are displayed on film transparencies or in a digital medium if image 
+projection equipment is used. The latter approach is gaining acceptance as the standard for image 
+presentations. 
+Networking is almost a default function in any compu ter system in use today. Because  of 
+the large amount of data inherent in image processing applications, the key consideration in image 
+transmission is bandwidth. In dedicated networks, this typically is not a problem, but 
+communications with remote sites via the Internet are not always as  efficient. Fortunately, this 
+situation is improving quickly as a result of optical fiber and other broadband technologies. 
+Elements of Visual Perception: 
+Although the digital image processing field is built on a foundatio n of mathematical and 
+probabilistic formulations, human intuition and analysis play a central role in the choice of one 
+technique versus another, and this choice often is made based on subjective, visual judgments. 
+(1) Structure of the Human Eye: 
+Figure 4.1 shows a simplified horizontal cross section of the human eye. The eye is nearly a 
+sphere, with an average diameter of approximately 20 mm. Three membranes enclose the  eye: 
+the cornea and sclera outer cover; the choroid; and the retina. The cornea is a tough, transparent 
+tissue that covers the anterior surface of the eye. Continuous with the cornea, the sclera is an 
+opaque membrane that encloses the  remainder of the optic globe. The choroid lies directly below 
+the sclera. This membrane contains a network  of blood vessels that serve as the major source of 
+nutrition to  the eye. Even  superficial injury to the choroid, often not deemed serious, can lead to  
+severe eye damage as a result of inflammation that restricts blood flow. The choroid coat is 
+heavily pigmented and hence  helps to reduce the amount of extraneous light entering the  eye and 
+the backscatter within the optical globe. At its anterior extreme, the choroid is divided into the 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 11 Dept of ADS 
+ 
+ 
+ciliary body and the iris diaphragm. The latter contracts  or expands to control the amount of  light 
+that enters the eye. The central opening of the iris (the pupil) varies in diameter from 
+approximately 2 to 8 mm. The front of the iris contains the visible pigment of the eye, whereas 
+the back contains a black pigment. 
+ 
+Fig.4.1 Simplified diagram of a cross section of the human eye. 
+ 
+The lens is made up of concentric layers of fibrous cells and is suspended by fibers that 
+attach to the ciliary body. It contains 60 to 70%water, about 6%fat, and more protein than any 
+other tissue in the eye. The  lens is colored by a slightly yellow pigmentation that increases with 
+age. In extreme cases, excessive clouding of the lens, caused by the affliction commonly ref erred 
+to as cataracts, can lead to poor color discrimination and loss of clear vision. The lens absorbs 
+approximately 8% of the visible light spectrum, with relatively higher absorption at shorter 
+wavelengths. Both infrared and ultraviolet light are absorbed appreciably by proteins within the 
+lens structure and, in excessive amounts, can damage the eye. 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 12 Dept of ADS 
+ 
+ 
+ 
+ 
+ 
+The innermost membrane of the eye is the retina, which lines the inside of the wall’s entire 
+posterior portion. When the eye is properly focused, light from an object outside the eye is 
+imaged on the retina. Pattern vision is afforded by the distribution of discrete light receptors over 
+the surface of the retina. There are two classes of receptors: cones and rods. The cones in each 
+eye number between 6 and 7 million. They are located primarily in the central portion of the 
+retina, called the fovea, and  are highly sensitive to color. Humans can  resolve fine details with  
+these cones largely  because each one is connected to its own nerve end. Muscles controlling the  
+eye rotate the eyeball until the image of an object of interest falls on the fovea. Cone vision is 
+called photopic or bright-light vision. 
+The number of rods is much larger: Some 75 to 150 million are  distributed over the retinal 
+surface. The larger area of distribution and the fact that several rods are connected to a single 
+nerve end reduce the amount of detail discernible by these receptors. Rods serve to give a general, 
+overall picture of the field  of view. They are not involved in color vision  and are sensitive to low 
+levels of illumination. For example, objects that appear brightly colored in daylight when seen by 
+moonlight appear as colorless forms because only  the rods are  stimulated. This pheno menon is 
+known as scotopic or dim-light vision. 
+(2) Image Formation in the Eye: 
+The principal difference between the  lens of the eye and an ordinary optical lens is  that the 
+former is flexible. As illustrated in Fig. 4.1, the radius of curvature of the anterior surface of the  
+lens is greater than the radius of its posterior surface. 
+ 
+ 
+ 
+Fig.4.2. Graphical representation of the eye looking at a palm tree Point C is the optical 
+center of the lens. 
+ 
+The shape of  the lens  is controlled by tension in the fibers of the ciliary body. To focus on 
+distant objects, the controlling muscles cause the lens to be relatively flattened.  Similarly, these 
+muscles allow the lens to become thicker in order to focus on objects near the eye. The distance  
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 13 Dept of ADS 
+ 
+ 
+between the center of the lens and the retina (called the focal length) varies from approximately 17 
+mm to about 14 mm, as the refractive power of the lens increases from its minimum to its 
+maximum. When the  eye focuses on  an object farther away than about 3 m, the lens exhibits its  
+lowest refractive power. When the eye focuses on a  nearby object, the lens is most strongly 
+refractive. This information makes it easy to calculate the size of the retinal image of any object. 
+In Fig. 4.2, for example, the  observer is looking at a tree 15  m high at a distance of 100 m. If h is 
+the height in mm of that object in the retinal image, the geometry of Fig.4.2 yields 15/100=h/17 or 
+h=2.55mm. The retinal image is r eflected primarily in the area of the fovea. Perception then  takes 
+place by the relative excitation of light receptors, which transform radiant energy into electrical 
+impulses that are ultimately decoded by the brain. 
+ 
+(3) Brightness Adaptation and Discrimination: 
+Because digital images are displayed as a discrete set of intensities, the eye’s ability to 
+discriminate between different intensity levels is an important consideration in presenting image - 
+processing results. The range of light intensity levels to which the human visual system can adapt 
+is enormous —on the order of 10 10—from the scotopic threshold to the glare limit. Experimental 
+evidence indicates that subjective brightness (intensity as perceived by the human visual system) 
+is a logarithmic function of the light intensity incident on the eye. Figure 4.3, a plot of light 
+intensity versus subjective brightness, illustrates this characteristic. The long solid curve 
+represents the range  of intensities to which the visual system can  adapt. In photopic vision alone, 
+the range is  about 106. The  transition from scotopic to photopic vision is gradual over the 
+approximate range from 0.001 to 0.1 millilambert ( –3 to –1 mL  in the log scale), as the  double 
+branches of the adaptation curve in this range show. 
+ 
+ 
+ 
+Fig.4.3. Range of Subjective brightness sensations showing a particular adaptation level. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 14 Dept of ADS 
+ 
+ 
+The essential point in interpreting the impressive dynamic range depicted in Fig.4.3  is that 
+the visual system cannot operate  over such  a range simultaneously. Rather,  it accomplishes this  
+large variation by changes in its overall sensitivity, a phenomenon known as brightness 
+adaptation. The total range  of distinct intensity  levels it can discriminate simult aneously is rather  
+small when compared with the total adaptation range. For any given set of conditions, the current 
+sensitivity level of the visual system is called the brightness adaptation level, which may 
+correspond, for example, to  brightness Ba  in Fig. 4.3. The short intersecting curve represents the  
+range of subjective brightness that the  eye can perceive when adapted to this level. This range is  
+rather restricted, having a level Bb at and below which all stimuli are perceived as 
+indistinguishable blacks. The upper (dashed) portion of the curve is not actually restricted but, if 
+extended too far, loses its meaning because much higher intensities would simply raise the 
+adaptation level higher than Ba. 
+Image Sensing and Acquisition: 
+The types of images in which we are interested are generated by the combination of an 
+illumination source and the reflection or absorption of energy from that source by the elements of 
+the scene being imaged. We enclose illumination and scene in quotes to emphasize the fact that 
+they are considerably more general than the familiar situation in which a visible light source 
+illuminates a common everyday 3-D (three-dimensional) scene. For example, the illumination 
+may originate from a source of electromagnetic energy such as radar, infrared, or X-ray energy. 
+But, as noted earlier, it could originate from less traditional sources, such as ultrasound or even a 
+computer-generated illumination pattern. 
+Similarly, the scene elements could be familiar objects, but they can just  as easily be 
+molecules, buried rock formations, or a human brain. We could  even image  a source, such as 
+acquiring images of the sun. Depending on the nature of the source, illumination energy is 
+reflected from, or transmitted through, objects. An example i n the first category is light ref  lected 
+from a planar surface. An example in the second  category is when X -rays pass through a  patient’s 
+body for the purpose of generating a diagnostic X -ray film. In some applications, the reflected or 
+transmitted energy is focused onto a photo converter (e.g., a phosphor screen), which converts the 
+energy into visible light. Electron microscopy and some applications of gamma imaging use this 
+approach. 
+Figure 5.1 shows the three principal sensor  arrangements used to transf orm illumination 
+energy into digital images. The idea is simple: Incoming energy is transformed into a voltage by 
+the combination of input electrical power and sensor material that is responsive to the particular  
+type 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 15 Dept of ADS 
+ 
+ 
+of energy being detected. The output voltage waveform is the response of the sensor(s), and a 
+digital quantity is obtained from each sensor by digitizing its response. 
+ 
+Fig.5.1 (a) Single imaging Sensor (b) Line sensor (c) Array sensor 
+ 
+(1) Image Acquisition Using a Single Sensor: 
+Figure 5.1 (a) shows the components of a single sensor. Perhaps the most familiar sensor of this 
+type is the photodiode, which is constructed of silicon materials and whose output voltage 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 16 Dept of ADS 
+ 
+ 
+waveform is proportional to light. The use of a filter in front of a sensor improves selectivity. For 
+example, a green (pass) filter in front of a light sensor favors light in the green band of the color 
+spectrum. As a consequence, the sensor output will be strong er for green light than for other 
+components in the visible spectrum. 
+In order to generate a 2-D image using a  single sensor, there has to be relative displacements 
+in both the x - and y -directions between the sensor and the area to be imaged. Figure 5.2 sh ows an 
+arrangement used in high-precision scanning, where a film negative is mounted onto a drum 
+whose mechanical rotation provides displacement in one dimension. 
+ 
+Fig.5.2. Combining a single sensor with motion to generate a 2 -D image 
+The single sensor is mounted on a lead screw that provides motion in the  perpendicular 
+direction. Since mechanical motion can be controlled with high precision, this method is  an 
+inexpensive (but slow) way to obtain high-resolution images. Other similar mechanical 
+arrangements use a flat bed, with the sensor moving in two linear directions. These  types of 
+mechanical digitizers sometimes are referred to as microdensitometers. 
+(2) Image Acquisition Using Sensor Strips: 
+A geometry that is used much more frequently than single senso rs consists of an in -line 
+arrangement of sensors in the form of a sensor strip, as Fig. 5.1 (b) shows. The strip provides 
+imaging elements in one direction. Motion perpendicular to the strip provides imaging in the other 
+direction, as shown in Fig. 5.3 (a).This is the type of  arrangement used in most flatbed scanners. 
+Sensing devices with 4000 or more in -line sensors are possible. In -line sensors are used routinely in 
+airborne imaging applications, in which the imaging system is mounted on an  aircraft that flies  at 
+a constant altitude and speed over the geographical area to  be imaged. One- dimensional imaging  
+sensor strips that respond to various bands of the electromagnetic spectrum are mounted 
+perpendicular to the direction of flight. The imaging strip gives one line of  an image at a time, and 
+the motion of the strip completes the other dimension of a two -dimensional image. Lenses or other 
+focusing schemes are used to project the area to be scanned onto the sensors. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 17 Dept of ADS 
+ 
+ 
+ 
+Sensor strips mounted in a ring configuration are used  in medical and industrial 
+imaging to obtain cross -sectional (―slice‖) images of 3 -D objects, as Fig. 5.3 (b) shows. A 
+rotating X-ray source provides illumination and the portion of the sensors opposite the 
+source collect the X-ray energy that pass through the object (the sensors obviously  have to 
+be sensitive to X -ray energy).This is the basis for medical and industrial computerized axial 
+tomography (CAT). It is important to note that the output of  the sensors must be processed 
+by reconstruction algorithms whose objective is to transform the sensed data into 
+meaningful cross-sectional images. 
+ 
+ 
+Fig.5.3. (a) Image acquisition using a linear sensor strip 
+(b) Image acquisition using circular sensor strip 
+In other words,  images are not obtained directly from the sensors by motion alone; they  
+require extensive processing. A 3-D digital volume consisting of stacked images is generated as 
+the object is moved in a direction perpendicular to the sensor ring. Other modalities  of imaging 
+based on the CAT principle include magnetic resonance imaging (MRI) and positron emission 
+tomography (PET).The illumination sources, sensors, and types of images are different, but 
+conceptually they are very similar to the basic imaging approach shown in Fig. 5.3 (b). 
+(3) Image Acquisition Using Sensor Arrays: 
+Figure 5.1 (c) shows individual sensors arranged in the form of a 2 -D array. Numerous 
+electromagnetic and  some ultrasonic sensing devices frequently  are arranged in an array  format. 
+This is also the predominant arrangement found in digital cameras.  A typical sensor for these  
+cameras is a CCD array, which can be manufactured with a broad range of sensing properties 
+and can be packaged in rugged arrays of 4000 * 4000 elements or more. CCD sensors are used 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 18 Dept of ADS 
+ 
+ 
+widely in digital cameras and other light sensing instruments. The response of each sensor  is 
+proportional to the integral of the light energy projected onto the surface of  the sensor, a property 
+that is used in astronomical and other applications requiring low noise images. Noise reduction is 
+achieved by letting the sensor integrate the input light signal over minutes or even hours. 
+ 
+ 
+Fig.5.4 An example of the digital image acquisition process 
+(a) Energy (―illumination‖) source (b) An element of a scene (c) Imaging system 
+(d) Projection of the scene onto the image plane (e) Digitized image 
+ 
+Since the sensor array shown in Fig. 5.4 (c)  is two dimensional, its key advantage  is 
+that a complete image can be obtained by focusing the energy pattern onto the surface of the 
+array. The principal manner in which array sensors are used is shown in Fig.5.4. This figure 
+shows the  energy from  an illumination source being reflected from a scene element, but, 
+as mentioned at the beginning  of this section, the energy  also could be transmitted through 
+the scene elements. The first function performed by the imaging system shown in Fig.5.4 
+(c) is to collect the incoming energy and focus it onto an image plane. If the illumination  is 
+light, the front end of the imaging system is a lens, which projects the viewed scene onto 
+the lens focal plane,  as Fig.  2.15(d) shows.  The sensor array,  which is coincident with the  
+focal plane, produces outputs proportional to the integral of the light received at each 
+sensor. Digital and analog circuitry sweep these outputs and converts them to a video signal, 
+which is then digitized by  another section  of the imaging system.  The output is a digital  
+image, as shown diagrammatically in Fig. 5.4 (e). 
+Image Sampling and Quantization: 
+The output of most sensors is a continuous voltage waveform whose amplitude  and 
+spatial behavior are related to the physical phenomenon being sensed. To create a digital 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 19 Dept of ADS 
+ 
+ 
+image, we need to convert the continuous sensed data into digital form. This involves two 
+processes: sampling and quantization. 
+Basic Concepts in Sampling and Quantization: 
+The basic idea behind sampling and quantization is illustrated in Fig.6.1. Figure 
+6.1(a) shows a continuous image, f(x, y), that we want to convert to digital  form. An image 
+may be continuous with respect to the x- and y-coordinates, and also in amplitude. To 
+convert it to  digital form, we have to sample the function  in both coordinates and in 
+amplitude. Digitizing the coordinate values is called sampling. Digitizing the amplitude 
+values is called quantization. 
+The one -dimensional function shown in Fig.6.1 (b) is a plot of amplitude (gray level) 
+values of the continuous image  along the line segment AB in Fig. 6.1(a).The random 
+variations are due to image noise. To sample this function, we take equally spaced  samples 
+along line AB, as shown in Fig.6.1 (c).The location  of each sample is given by a  vertical 
+tick mark in the bottom part of the figure. The samples are shown as small white squares 
+superimposed on the function. The set of these discrete locations gives the sampled 
+function. However, the values of the samples still span (vertically) a continuous range of gray - 
+level values. In order to form a digital function, the gray -level values also must be converted 
+(quantized) into discrete quantities. The right side of Fig. 6.1 (c) show s the gray - level scale 
+divided into eight discrete levels, ranging from black to white. The vertical tick marks indicate 
+the specific value assigned to each of the eight gray levels. The continuous gray levels are 
+quantized simply by assigning one of the eight discrete gray levels to each sample. The 
+assignment is made depending on the vertical proximity of a sample  to a vertical tick  mark. 
+The digital samples resulting from both sampling and quantization are shown in Fig.6.1 (d). 
+Starting at the top of th e image and carrying out this procedure line by line produces a two - 
+dimensional digital image. 
+Sampling in  the manner just described  assumes that we  have a continuous image in  
+both coordinate directions as well as in amplitude. In practice, the method of sampling is 
+determined by the sensor arrangement used to generate the image. When an image is 
+generated by a single sensing element combined with mechanical motion, as in Fig. 2.13, 
+the output of the sensor is quantized in the manner described above. Howev er, sampling is 
+accomplished by selecting the number of individual mechanical increments at  which we 
+activate the sensor to collect data. Mechanical motion can be made very exact so, in 
+principle; there is almost no limit as to how fine we can sample an image. However, 
+practical limits are established by imperfections in the optics used to focus on the 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 20 Dept of ADS 
+ 
+ 
+ 
+ 
+Fig.6.1. Generating a digital image (a) Continuous image (b) A scan line  from A to B  
+in the continuous image, used to illustrate the concepts of sampling and quantization 
+(c) Sampling and quantization. (d) Digital scan line 
+sensor an  illumination spot that  is inconsistent with  the fine resolution achievable  
+with mechanical  displacements. When  a s ensing strip is  used for image acquisition, the 
+number of sensors in the strip establishes the sampling limitations in one image direction. 
+Mechanical motion in the  other direction can be controlled more accurately, but it makes 
+little sense to try to achieve sampling density in one direction that exceeds the sampling 
+limits established by the number of sensors in the other. Quantization of the sensor outputs 
+completes the process of generating a digital image. 
+ 
+Fig.6.2. (a) Continuous image projected onto a sensor array (b) Result of image 
+sampling and quantization. 
+When a sensing array is used for  image acquisition, there  is no motion and the 
+number of sensors in the array establishes the limits of sampling in both directions. Figure 
+6.2 illustrates this concept. Figure 6.2 (a) shows a continuous image projected onto the 
+plane of an array sensor. Figure 6.2 (b) shows the image after sampling and quantization. 
+Clearly, the quality of a digital image is determined to a  large degree by the number of  
+samples and discrete gray levels used in sampling and quantization. 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 21 Dept of ADS 
+ 
+ 
+Aliasing and Moiré Patterns: 
+Functions whose area under the curve is finite can be represented in terms of sines 
+and cosines of various frequencies. The sine/cosine component with the highest frequency 
+determines the  highest ―frequency content‖ of  the function. Suppose that this  highest 
+frequency is finite and that the function is of unlimited duration (these functions are  called 
+band-limited functions).Then, the Shannon  sampling theorem [Brace well (1995)]  tells us 
+that, if the function is sampled at a rate equal to or greater than twice its highest frequency, it 
+is possible to  recover completely  the original function from its sam ples. If the function  is 
+under sampled, then a phenomenon called aliasing corrupts the sampled image. The 
+corruption is in the form of additional frequency components  being introduced into the 
+sampled function. These are called aliased frequencies. Note that the sampling rate in 
+images is the number of samples taken (in both spatial directions) per unit distance. 
+ 
+Fig.8. Illustration of the Moiré pattern effect 
+As it turns out, except for a special case discussed in the following paragraph, it is 
+impossible to satisfy the sampling theorem in practice. We can only work with  sampled data 
+that are finite in duration. We can model the process of converting a function of unlimited 
+duration into a function  of finite duration simply by multiplying the unlimited function 
+by a ―gating function‖ that is valued 1 for some interval and 0 elsewhere. Unfortunately, 
+this function itself has frequency components that extend to infinity. Thus, the very act of 
+limiting the duration of a band - limited function causes it to cease being band limited, which 
+causes it to violate the key condition of the sampling theorem. The principal approach for 
+reducing the aliasing effects on an image is to reduce its high -frequency components by 
+blurring the image prior to sampling. However, aliasing is always present in a sampled 
+image. The effect of aliased frequencies can be seen under the right conditions in the form 
+of so called Moiré patterns. 
+There is one special case of significant importance in  which a function of  infinite 
+duration can be sampled over a finite interval without violating the sampling theorem. 
+When a function is periodic, it may be sampled at a rate equal to  or exceeding twice its  
+highest frequency and it is possible to recover the function from its samples provided that 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 22 Dept of ADS 
+ 
+ 
+the sampling captures exactly an integer number of periods of the function. This special 
+case allows us to illustrate vividly the Moiré effect. Figure 8 shows two identical periodic 
+patterns of equally spaced vertical bars, rotated in opposite directions and then 
+superimposed on each other by multiplying the two images. A Moiré pattern, caused by a 
+breakup of the periodicity,  is seen  in Fig.8 as a 2 -D sinusoidal (aliased) waveform (which  
+looks like a corrugated tin roof) running in a vertical direction. A similar pattern can appear 
+when images are digitized  (e.g., scanned) from a printed page, which consists of periodic 
+ink dots. 
+Basic relationships and distance measures between pixels in a digital image. 
+Neighbours of a Pixel: 
+ 
+• A pixel p at coordinates (x,y) has four horizontal and vertical 
+neighbors whose coordinates are given by: (x+1,y), (x-1, y), (x, 
+ 
+y+1), (x,y-1) 
+ 
+This set of pixels, called the 4 -neighbors or p, is denoted by N4(p). Each pixel is 
+one unit distance from (x,y) and some of the neighbors of p lie outside the digital image if 
+(x,y) is on the border of the image. The four diagonal neighbors of p have coordinates and 
+are denoted by ND (p). 
+(x+1, y+1), (x+1, y-1), (x-1, y+1), (x-1, y-1) 
+ 
+ 
+ 
+N8 (p). These points, together with the 4-neighbors, are called the 8-neighbors of p, denoted by 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 23 Dept of ADS 
+ 
+ 
+ 
+ 
+ 
+As before, some of the points in ND (p) and N8 (p) fall outside the image if (x,y) is on the border of the image. 
+ 
+Connectivity: 
+Connectivity between pixels is a fundamental concept that simplifies the definition of 
+numerous digital image  concepts, such as regions  and boundaries. To establish if two pixels 
+are connected, it must be determined if they are neighbors and if their gray levels satisfy a 
+specified criterion of similarity (say, if their gray levels are equal). For instance, in a binary 
+image with values 0 and 1, two pixels may be 4 -neighbors, but they are said to  be connected 
+only if they have the same value. 
+Let V be the set of gray -level values used  to define adjacency. In  a binary  image, 
+V={1} if we are referring to  adjacency of pixels with value 1. In  a grayscale image, the  
+idea is the same, but set V typically contains more elements. For example, in  the adjacency 
+of pixels with a  range of possible gray-level values 0 to 255, set V could be any subset of  
+these 256 values. We consider three types of adjacency: 
+(a) 4-adjacency. Two pixels p and q with values from V are 4 -adjacent if q is in the set N4 (p). 
+ 
+(b) 8-adjacency. Two pixels p and q with values from V are 8 -adjacent if q is in the set N8 (p). 
+(c) m-adjacency (mixed adjacency).Two pixels p and q with values from V are m-adjacent if 
+(i) q is in N4 (p), or (ii) q is in ND (p) and the set has no pixels whose values are from V. 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 24 Dept of ADS 
+ 
+ 
+ 
+Mixed adjacency is a modification of 8 -adjacency. It is introduced to eliminate the 
+ambiguities that often arise when 8 -adjacency is used. For ex ample, consider the pixel 
+arrangement shown in Fig.9 (a) for V= {1}.The  three pixels at the top of  Fig.9 (b) show  
+multiple (ambiguous) 8 - adjacency, as indicated by the dashed lines.  This ambiguity is 
+removed by using m -adjacency, as shown in Fig. 9 (c).Tw o image subsets S1  and S2 are 
+adjacent if some pixel in S1 is adjacent to some pixel in S2. It is understood here and in the 
+following definitions  that adjacent means  4-, 8-, or m -adjacent. A (digital) path (or  curve) 
+from pixel p with coordinates (x, y) to pixel q with coordinates (s, t) is a sequence of 
+distinct pixels with coordinates 
+(𝑥0, 𝑦0 ), (𝑥1, 𝑦1 ), … , (𝑥𝑛, 𝑦𝑛) 
+where (𝑥0, 𝑦0 ) = (𝑥, 𝑦), (𝑥𝑛, 𝑦𝑛) = (𝑠, 𝑡) and pixels (𝑥𝑖, 𝑦𝑖 ) 𝑎𝑛𝑑 (𝑥𝑖−1, 𝑦𝑖−1) are 
+adjacent for 1 ≤ 𝑖 ≤ 𝑛. . In this case, n is the length of the path. If (xo, yo) = (xn, yn), the path 
+is a closed path. We can define 4-, 8-, or m-paths depending on the type of adjacency 
+specified. For example, the paths shown in Fig. 9 (b) between the northeast and southeast 
+points are 8-paths, and the path in Fig. 9 (c) is an m-path. Note the absence of ambiguity in 
+the m-path. Let S represent a subset of pixels in an image. Two pixels p and q are said to 
+be connected in S if there exists a path between them consisting entirely of pixels in S. For 
+any pixel p in S, the set of pixels that are connected to it in S is called a connected 
+component of S. If it only has one connected component, then set S is called a connected 
+set. 
+ 
+ 
+Fig.9 (a) Arrangement of pixels; (b) pixels that are 8 -adjacent (shown dashed) to the 
+center pixel; (c) m-adjacency 
+ 
+Let R be a subset of pixels in an image. We call R a region of the image if R is a 
+connected set. The boundary (also called border or contour) of a region R is the set of pixels 
+in the region that have one or more neighbors that are not in R. If R happens to be an entire 
+image (which we recall is a rectangular set of pixels), then its  boundary is defined as the set 
+of pixels in the first and last rows and columns of the image. This extra definition is 
+required because an image has no neighbors beyond its border. Normally, when we ref er to 
+a region, we are referring to a subset of an  image, and  any pixels in  the boundary of the 
+region that happen to coincide with  the border of the image  are included implicitly  as part of  
+the region boundary. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 25 Dept of ADS 
+ 
+ 
+ 
+ 
+Distance Measures: 
+For pixels p, q, and z, with coordinates (x, y), (s, t), and (v, w), respectively, D is a distance 
+function or metric if 
+(𝑎)(𝑝, 𝑞) ≥ 0(𝐷(𝑝, 𝑞) = 0 𝑖𝑓𝑓 𝑝 = 𝑞) (𝑏)𝐷(𝑝, 
+𝑞) = 𝐷(𝑞, 𝑝) 𝑎𝑛𝑑 
+(𝑐)𝐷(𝑝, 𝑧) ≤ 𝐷(𝑝, 𝑞) + 𝐷(𝑞, 𝑧). 
+The Euclidean distance between p and q is defined as 
+1 
+𝐷(𝑝, 𝑞) = [(𝑥 − 𝑠)2 + (𝑦 − 𝑡)2]2 
+For this distance measure, the pixels having a distance less than or equal to some value r 
+from(x,y) are the points contained in a disk of radius r centered at (x, y). 
+The D4 distance (also called city-block distance) between p and q is defined as 
+𝐷4(𝑝, 𝑞) = |𝑥 − 𝑠| + |𝑦 − 𝑡| 
+In this case, the pixels having a D 4 distance from (x, y) less than or equal to some value r form a 
+diamond centered at (x, y). For example, the pixels with  D4 distance ≤ 2  from (x, y) (the center 
+point) form the following contours of constant distance: 
+ 
+ 
+The pixels with D4 =1 are the 4-neighbors of (x, y). 
+The D8 distance (also called chessboard distance) between p and q is defined as 
+𝐷8(𝑝, 𝑞) = 𝑚𝑎𝑥(|𝑥 − 𝑠|, |𝑦 − 𝑡|) 
+In this case, the pixels with D8 distance from(x, y) less than or equal to some value r form a 
+square centered at (x,  y). For example, the pixels with D8 distance ≤ 2 from(x,  y) (the center  
+point) form the following contours of constant distance: 
+ 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+26 St. Joseph’s College of Engineering Dept of ADS 
+ 
+ 
+ 
+ 
+The pixels with D 8=1 are the 8 -neighbors of  (x, y). Note that the D4 and D8 distances  
+between p  and q are independent of any paths that might exist between the points because  
+these distances involve only the coordinates of the points. If we elect  to consider m - 
+adjacency, however, the D m distance between two points is defined as the shortest m -path 
+between the points. In this case, the distance between two pixels will depend on the values 
+of the pixels along the path, as well as the values of their neighbors. 
+ 
+• Example: 
+Consider the following arrangement of pixels and assume that p, p2, and p4 have value 1 
+and that p1 and p3 can have can have a value of 0 or 1 Suppose that we consider the 
+adjacency of pixels values 1 (i.e. V = {1}) 
+ 
+Now, to compute the Dm between points p and p4 
+Here we have 4 cases: 
+Case1: If p1 =0 and p3 = 0 
+The length of the shortest m-path (the Dm distance) is 2 (p, p2, p4) 
+ 
+ 
+Case2: If p1 =1 and p3 = 0 
+Now, p1 and p will no longer be adjacent (see m-adjacency definition) 
+Then, the length of the shortest path will be 3 (p, p1, p2, p4) 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 27 Dept of ADS 
+ 
+ 
+Case3: If p1 =0 and p3 = 1 
+The same applies here, and the shortest –m-path will be 3 (p, p2, p3, p4) 
+ 
+Case4: If p1 =1 and p3 = 1 
+The length of the shortest m-path will be 4 (p, p1 ,p2, p3, p4) 
+ 
+ 
+Basic Morphological Algorithms 
+ 
+Morphological operations are a set of techniques used in image processing to analyze and modify the 
+shape and structure of objects within an image. The morphological operations are based on the 
+mathematical theory of morphology, which studies the properties of shapes and patterns.  
+ 
+Morphological operations are typically applied to binary images, although some operations can also 
+be applied to grayscale images. These operations are used to remove noise, separate or extract  
+specific shapes, and perform various other tasks in image analysis. Here are some of the most 
+common morphological operations: 
+ Erosion 
+ Dilation 
+ Opening 
+ Closing 
+ Skeletonization  
+ Thinning 
+ 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 28 Dept of ADS 
+ 
+ 
+ 
+Structuring Elements 
+A structuring element is a matrix used in morphological operations to define the neighborhood or 
+pattern of pixels that are processed together. The shape and size of the structuring element determine 
+how the morphological operation interacts with the pixels in the image. 
+Below are the common types of structuring elements that are typically used. 
+Square/Rectangle 
+In this element, there is is a matrix of ones in a square or rectangular pattern. Uniformly affects all 
+pixels in the neighborhood. Often used for basic operations due to its simplicity.  
+ 
+Disk or Circle 
+A disk or circle structural element is a circular pattern where the center pixel is surrounded by a 
+neighborhood of pixels that form a circle. It provides isotropic effects, meaning uniform changes in 
+all directions. Ideal for processing circular objects or when a uniform impact in all directions is 
+needed. 
+ 
+ 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 29 Dept of ADS 
+ 
+ 
+ 
+Cross 
+A cross structural element pattern is shaped like a cross, typically derived from a square by retaining 
+only the central row and column. Emphasizes changes along the horizontal and vertical directions. 
+Useful for operations that require preservation of linear features or lines.  
+ 
+Ellipse 
+An elliptical structural element pattern, which is like the disk but elongated in one direction. It has 
+anisotropic effects, meaning more influence in one direction. Useful for processing elongated 
+structures or features that are stretched in one direction. 
+ 
+Diamond 
+A diamond-shaped structural element pattern, often a variation of a cross, but with diagonal 
+influence. Combines the properties of a cross and a square, affecting pixels diagonally as well. 
+Useful for operations that require a balanced influence between diagonal and orthogonal directions. 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 30 Dept of ADS 
+ 
+ 
+ 
+Morphological Operations 
+ 
+The source images are converted to binary and grayscale images respectively before applying the 
+morphological operations as shown below. 
+Converted binary and grayscale images 
+Erosion 
+Erosion shrinks or reduces the boundaries of the foreground objects by a certain amount based on a 
+structuring element (also called a kernel).  
+ 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 31 Dept of ADS 
+ 
+ 
+ 
+Erosion has two components: 
+Structuring Element: The erosion operation involves a structuring element (also called a kernel), 
+which is a small matrix used to probe the input image. 
+Binary Image: Erosion is typically applied to a binary image where pixels are either 1 (white) or 0 
+(black). 
+This process results in the following: 
+Foreground Objects Shrink: Small details in the foreground are removed. 
+Object Boundaries: The edges of the objects are eroded (retracted) inward by the size of the 
+structuring element. 
+Imagine you have a binary image with a large letter "M". Erosion with a disk-shaped structuring 
+element will cause the boundaries of the "M" to shrink inward. Small details or noise around the 
+letter will be removed. Following code shows how to perform erosion: 
+# Define a disk-shaped 7x7 structuring element 
+org_img = disk(3) 
+# Apply erosion 
+eroded_image = erosion(binary_image, org_img) 
+Following is the output. 
+ 
+Output of Erosion Morphological Operation 
+ 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 32 Dept of ADS 
+ 
+ 
+ 
+Dilation 
+Dilation is another fundamental morphological operation that complements erosion. While erosion 
+shrinks objects in a binary image, dilation expands them. The basic idea behind dilation is to grow or 
+increase the boundaries of foreground objects based on a structuring element.  
+Dilation has two components: 
+Structuring Element: Dilation involves a structuring element, which is a small matrix used to probe 
+the input image. 
+Binary Image: Dilation is typically applied to a binary image where pixels are either 1 (white) or 0 
+(black). 
+This process results in the following: 
+Foreground Objects Expand: The objects in the foreground (white regions) grow outward. 
+Bridging Gaps: Small gaps or holes in the foreground objects can be filled. 
+Imagine you have a binary image with a large letter "M". Dilation with a disk-shaped structuring 
+element will cause the boundaries of the "M" to expand outward. Small gaps or noise in the letter can 
+be filled. Code below shows how to apply dilation: 
+# Define a disk-shaped 7x7 structuring element 
+org_img = disk(3) 
+# Apply dilation 
+dilated_image = dilation(binary_image, org_img) 
+Following is the output generated by code. 
+ 
+Output of Dilation Morphological Operation 
+ 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 33 Dept of ADS 
+ 
+ 
+Opening 
+Opening is a morphological operation that combines erosion followed by dilation. It is primarily 
+used to remove small objects or noise from an image while preserving the shape and size of the 
+larger objects. 
+Here are the two parts of opening: 
+Erosion: The first step in opening is erosion, which removes small objects or details from the 
+foreground (white regions) by shrinking the boundaries of the objects. 
+Dilation: After erosion, dilation is applied, which restores the size of the remaining obj ects. 
+However, since the smaller objects were completely eroded away in the first step, they are not 
+restored, effectively removing them from the image. 
+The key effect of opening is that it smooths the contour of objects, breaks narrow isthmuses, and 
+eliminates thin protrusions. It is particularly useful for removing noise or small objects that are not 
+connected to the main objects in the image. 
+Consider an image with small noise or specks around a large object, such as the letter "M". Applying 
+the opening operation will remove the small noise while preserving the shape of the letter. Following 
+is the code to apply opening operation: 
+# Define a disk-shaped structuring element 
+org_img = disk(3) 
+# Apply opening (erosion followed by dilation) 
+opened_image = opening(binary_image, org_img) 
+The code will generate the following output:
+ 
+ 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 34 Dept of ADS 
+ 
+ 
+Closing 
+Closing combines dilation followed by erosion. It is essentially the reverse of the opening operation 
+and is used to close small holes, gaps, or spaces within the foreground objects while preserving their 
+overall shape. 
+Here are the two components in Closing: 
+Dilation: The first step in closing is dilation, which expands the boundaries of the foreground objects 
+(white regions) in the binary image. This step helps in filling small holes or gaps within the objects. 
+Erosion: After dilation, erosion is applied. The erosion step shrinks the boundaries back, restoring 
+the original size of the objects. However, any small holes or gaps that were filled during the dilation 
+step will remain filled, effectively "closing" them. 
+The key effect of closing is that it smooths the contours of objects, fuses narrow breaks and long thin 
+gulfs, eliminates small holes, and fills gaps in the contours of objects. 
+Consider an image with small gaps or holes within a large object, such as the letter "M" with small 
+holes or gaps. Applying the closing operation will fill these holes or gaps while preserving the 
+overall shape of the letter. Code below shows how to apply a closing operation: 
+# Define a disk-shaped structuring element 
+org_img = disk(5) 
+# Apply closing (dilation followed by erosion) 
+closed_image = closing(binary_image, org_img) 
+The code generates the following output. 
+ 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 35 Dept of ADS 
+ 
+ 
+ Skeletonization 
+Skeletonization is a morphological operation that reduces binary objects in an image to their 
+skeletons, or thin structures, while preserving the topological and geometric properties of the original 
+shapes. This process transforms a shape into a single-pixel-width line, which makes it easier to 
+analyze the shape's structure and connectivity. 
+How skeletonization works: 
+Thinning: The skeletonization process typically involves iterative thinning. The image is 
+progressively thinned from the edges inward until only the skeleton remains. 
+Preservation of Connectivity: The algorithm ensures that the connectivity of the objects is preserved 
+throughout the thinning process. This means that the resulting skeleton retains the same topological 
+features as the original object. 
+Edge Conditions: Special care is taken to handle edge conditions and ensure that the thinning 
+process does not break the connectivity or shape of the objects. 
+Consider a binary image of the letter "R". This example shows that objects are reduced to thin lines 
+representing their skeletons. Belo is the code for Skeletonization 
+# Perform skeletonization 
+skeleton = skeletonize(binary_image) 
+You will see output like following. 
+ 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 36 Dept of ADS 
+ 
+ 
+ Thinning  
+Thinning is used to reduce the thickness of objects in a binary image to a single-pixel-wide 
+representation. It is similar to skeletonization but focuses on reducing object thickness without 
+necessarily preserving the exact medial axis of the shape. The goal of thinning is to reduce the 
+foreground objects to their skeletal forms, which are one pixel wide, while preserving the object's 
+shape and connectivity. 
+Here are the stages of thinning: 
+Pixel Removal: During each iteration, a pixel is removed if it meets certain criteria related to its 
+neighbors. For example, a pixel might be removed if it has a certain number of white neighbors or if 
+removing it does not disconnect the object. 
+Multiple Passes: Thinning often requires multiple passes over the image, with different criteria for 
+each pass, to ensure that the object is reduced to a one-pixel-wide line. 
+Let's apply thinning to a simple binary image, such as a letter "R". This example will demonstrate 
+how thinning reduces the thickness of the letter to a single-pixel-wide line. Below is the code 
+example for thinning: 
+# Perform thinning 
+thinned_image = thin(binary_image) 
+The output image looks like the following. 
+ 
+ 
+ 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 37 Dept of ADS 
+ 
+ 
+ 
+Color Models 
+Color image fundamentals: 
+The color that humans perceived in an object are determined by the nature of the light reflected from 
+the object 
+Light is electromagnetic spectrum.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Visible light and Color 
+• Visible light is composed of a relatively narrow band of frequencies in the ES. 
+• Human color perceive is a composition of different wavelength spectrum 
+• The color of an object is a body that favors reflectance in a limited range 
+of visible spectrum exhibits some shade of colors 
+ 
+ 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 38 Dept of ADS 
+ 
+ 
+• Example 
+– White: a body that reflects light that balanced in all visible wavelengths 
+.  E.g. green objects reflect light with wavelength primarily in the 500 to 570 nm 
+range while absorbing most of the energy at other wavelengths. 
+Color sensors of eyes: cones 
+• Cones can be divided into three principle sensing categories, roughly red (65%), 
+green (33 %), blue (2%) 
+• Colors are seen as variable combination of the so-called primary colors Red (R), 
+Green (G), and blue (B). 
+ 
+ 
+ 
+ 
+ 
+Fig.11. Absorption of light by the red, green and blue cones in the human eye as a 
+function of wavelength. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 39 Dept of ADS 
+ 
+ 
+Primary colors and secondary colors 
+ 
+International Commission on Illumination (CIE) standard for primary 
+color 
+– Red: 700 nm 
+– Green: 546.1 nm 
+– Blue: 435.8 nm 
+• Primary color can be added to produce secondary colors 
+– Primary colors cannot produce all colors 
+• Pigments (colorants) 
+Define the primary colors to be the absorbing one and reflect other 
+ 
+Fig. 12.Primary and secondary colours of light and pigments. 
+(Courtesy of the General Electric Co., Lamp Business Division) 
+ 
+ 
+ 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 40 Dept of ADS 
+ 
+ 
+ 
+Characterization 
+• Brightness, hue, and saturation 
+• Brightness: achromatic notion of intensity 
+• Hue: attribute associated with dominating wavelength in a mixture of light waves, i.e., 
+the dominant color perceived by observer 
+• Saturation: refers to the relative purity or the amount white light mixed with a hue. 
+• Hue and saturation together are called chromaticity, so a color can be characterized by 
+its brightness and chromaticity 
+• The amount of red, green and blue to form a particular color are called tristimulus 
+values, denoted by X, Y, Z. The a color is defined by 
+ 
+𝑋 𝑌 𝑍 
+𝑥 =  , 𝑦 =  , 𝑧 =   
+𝑋 + 𝑌 + 𝑍 𝑋 + 𝑌 + 𝑍 𝑋 + 𝑌 + 𝑍 
+ 
+𝑥 + 𝑦 + 𝑧 = 1 
+ 
+ 
+Hardware-oriented color models 
+ 
+Hardware-oriented color models are color models used in physical devices like monitors and printers. 
+Examples: RGB color model and CMYK color model. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 41 Dept of ADS 
+ 
+ 
+Color models (color space, or color system) 
+• A color model is a specification of a coordinate system and subspace where each color is 
+represented as single point 
+• Examples 
+ RGB 
+ CMY (cyan, magenta, yellow)/CMYK (cyan, magenta, yellow, black) 
+ NTSC 
+ YCbCr 
+ HSV 
+ HSI 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fig. 13.Schematic of the RGB colour cube. Points along the main diagonal have gray values, 
+from black at the origin to white at point (1,1,1) 
+
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 42 Dept of ADS 
+ 
+ 
+RGB Color models 
+• (R, G, B): all values of R, G, B are between 0 and 1. 
+• With digital representation, for a fixed length of bits each color element. The total 
+number of bits is called color depth, or pixel depth. For example, 24 -bit RGB color 
+(r, g, b), 8-bits for each color. The 8-bit binary number r represents the value of r/256 in 
+[0,1] 
+ 
+Fig.14. RGB 24-bit color 
+ 
+ 
+ 
+ 
+ 
+ 
+HSI Model 
+i). HSI stands for Hue, Saturation and Intensity. Now when humans view a color object it 
+isdescribed by its hue, saturation and brightness. 
+ii). Hue is a color attribute that describes a pure color (pure yellow, orange or red) 
+Saturation gives a measure of the degree to which a pure color is diluted by white light. 
+Brightness is practically impossible to measure, however it depends upon color intensity, 
+which is key factor in describing color sensation. The intensity is easily measurable and the 
+results are also easily interpretable 
+iii). Thus the model that is used to describe a color object is the HSI model. 
+iv). The HSI model decouples the intensity from color -carrying information (hue and 
+saturation) in a color image 
+ 
+ 
+Fig.15. HSI Model 
+v).  The angle from the red axis gives the Hue, the length of the vector is the saturation and 
+the intensity is given by the position of the plane on the vertical intensity axis. 
+DS1402 Digital Image Processing 2025-2026 Unit-I Class Notes 
+St. Joseph’s College of Engineering 43 Dept of ADS 
+ 
+ 
+ 
+ 
+Converting colors from RGB to HIS 
+The hue H is given by 
+ 
+ 
+ 
+Where 
+𝐻 = {  𝜃 𝑖𝑓 𝐵 ≤ 𝐺} 
+360 − 𝜃 𝑖𝑓 𝐵 > 𝐺 
+ 
+1 [(𝑅 − 𝐺) + (𝑅 − 𝐵)] 
+𝜃 = cos−1 {  2 } 
+ 
+√(𝑅 − 𝐺)2 + (𝑅 − 𝐵)(𝐺 − 𝐵) 
+ 
+The saturation S is given by  
+ 
+𝑆 = 1 − 
+ 
+3 
+ 
+ 
+(𝑅 + 𝐺 + 𝐵) 

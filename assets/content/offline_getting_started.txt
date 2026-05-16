@@ -1,0 +1,21 @@
+LearnGrid Offline Getting Started
+
+This is an offline-first learning app. Everything you see here is available without internet.
+
+Try these MVP features:
+1) Open a content item and scroll. LearnGrid tracks your progress locally.
+2) Use Search. Keyword search is instant; Semantic search builds simple embeddings and ranks results.
+3) In Content Viewer, tap Explain to get a short explanation. Offline mode uses a small rule-based summarizer.
+4) If you later enable online AI (optional), your selected text may be sent to a cloud provider, only with consent.
+
+Privacy notes:
+- Progress, engagement signals, and AI cache are stored locally (Drift/SQLite).
+- No API keys are bundled with the app. If you add keys in .env, they stay on-device.
+
+Sample concept:
+Spaced repetition is a study technique that schedules reviews over increasing intervals. It helps long-term retention by revisiting material right before you forget it.
+
+Questions to ask:
+- What is spaced repetition?
+- Why does reviewing later help memory?
+- How could you apply it to your own study plan?
